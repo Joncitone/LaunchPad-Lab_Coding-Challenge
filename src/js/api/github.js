@@ -1,20 +1,12 @@
 const fetch = require('node-fetch');
 
 class FrameworkAPI {
-  constructor(
-    owner,
-    repo,
-    forks = 0,
-    commits = 0,
-    closedIssues = 0,
-    downloads = 0
-  ) {
+  constructor(owner, repo, forks = 0, commits = 0, closedIssues = 0) {
     this.owner = owner;
     this.repo = repo;
     this.forks = forks;
     this.commits = commits;
     this.closedIssues = closedIssues;
-    this.downloads = downloads;
   }
   fetchForks() {
     fetch(

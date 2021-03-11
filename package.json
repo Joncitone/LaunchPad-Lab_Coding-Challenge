@@ -1,0 +1,23 @@
+{
+  "name": "LaunchPad-Lab_Coding-Challenge",
+  "version": "1.0.0",
+  "description": "## Deployed Version",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joncitone/LaunchPad-Lab_Coding-Challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Joncitone/LaunchPad-Lab_Coding-Challenge/issues"
+  },
+  "homepage": "https://github.com/Joncitone/LaunchPad-Lab_Coding-Challenge#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
