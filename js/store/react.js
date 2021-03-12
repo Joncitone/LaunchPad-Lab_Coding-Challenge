@@ -52,8 +52,8 @@ export const getReactIssuesClosedThunk = () => {
 //INITIAL STATE
 const initialState = {
   forks: 0,
-  commits: 5,
-  issuesClosed: 6,
+  commits: 0,
+  issuesClosed: 0,
 };
 
 //REDUCER

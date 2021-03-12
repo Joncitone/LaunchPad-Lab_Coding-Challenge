@@ -24,8 +24,7 @@ class Store {
   dispatch(action) {
     this.prevState = this.state;
     this.state = this.reduce(this.state, action);
-
-    //this.notifySubscribers();
+    this.publish();
 
     return action;
   }
@@ -41,6 +40,14 @@ class Store {
 
   subscribe(subscriber) {
     this.subscribers.push(subscriber);
+  }
+
+  publish() {
+    this.subscribers.forEach(
+      function (subscriber) {
+        subscriber(this.prevState, this.state);
+      }.bind(this)
+    );
   }
 }
 
