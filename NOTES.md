@@ -42,7 +42,7 @@ returns the last year of commit activity grouped by week oldest to newest
 ```
 {
     "all": [
-        ... 4 most recent weeks pushed on below ...
+        ... number of commits from the past year ...
         16,
         9,
         11,

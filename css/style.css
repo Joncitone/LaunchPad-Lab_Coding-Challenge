@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'proxima-nova';
+  src: url('proxima-nova.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  background: linear-gradient(to bottom right, #065fae, #25a8e0);
+  height: 100vh;
+  color: white;
+}
+
+body {
+  font-family: 'proxima-nova', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+p {
+  font-size: 2em;
+}
+
+table,
+th,
+td {
+  border: 2px solid white;
+  border-collapse: collapse;
+  border-radius: 10px;
+}
+
+th,
+td {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+tbody > tr > td:first-child {
+  font-weight: bold;
+}
+
+#home-page-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
