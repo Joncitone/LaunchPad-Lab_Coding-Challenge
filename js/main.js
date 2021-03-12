@@ -82,20 +82,20 @@ store.subscribe(render);
 //STORE STATE TESTING
 console.log(store.getState());
 
-// getReactForksThunk();
-// getReactCommitsThunk();
-// getReactIssuesClosedThunk();
+getReactForksThunk();
+getReactCommitsThunk();
+getReactIssuesClosedThunk();
 
-// getAngularForksThunk();
-// getAngularCommitsThunk();
-// getReactIssuesClosedThunk();
+getAngularForksThunk();
+getAngularCommitsThunk();
+getAngularIssuesClosedThunk();
 
-// getEmberForksThunk();
-// getEmberCommitsThunk();
-// getEmberIssuesClosedThunk();
+getEmberForksThunk();
+getEmberCommitsThunk();
+getEmberIssuesClosedThunk();
 
-// getVueForksThunk();
-// getVueCommitsThunk();
-// getVueIssuesClosedThunk();
+getVueForksThunk();
+getVueCommitsThunk();
+getVueIssuesClosedThunk();
 
 setTimeout(() => console.log(store.state), 1000);
