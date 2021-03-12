@@ -1,78 +1,59 @@
 //const fetch = require('node-fetch');
 
-class FrameworkAPI {
-  constructor(owner, repo, forks = 0, commits = 0, closedIssues = 0) {
+export default class FrameworkAPI {
+  constructor(owner, repo) {
     this.owner = owner;
     this.repo = repo;
-    this.forks = forks;
-    this.commits = commits;
-    this.closedIssues = closedIssues;
   }
   fetchForks() {
-    fetch(
+    return fetch(
       `https://api.github.com/search/repositories?q=user%3A${this.owner}+repo%3A${this.repo}+${this.repo}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        this.forks = data.items[0].forks;
-      });
+    );
   }
   fetchCommits() {
-    fetch(
+    return fetch(
       `http://api.github.com/repos/${this.owner}/${this.repo}/stats/participation`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        this.commits = data.all.reduce((acc, curr) => acc + curr, 0);
-      });
+    );
   }
-  fetchClosedIssues() {
-    fetch(
+  fetchIssuesClosed() {
+    return fetch(
       `http://api.github.com/search/issues?q=repo:${this.owner}/${this.repo}+type:issue+state:closed`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        this.closedIssues = data.total_count;
-      });
+    );
   }
 }
 
 //FrameworkAPI Instances
-
-export const reactData = new FrameworkAPI('facebook', 'react');
-export const angularData = new FrameworkAPI('angular', 'angular.js');
-export const emberData = new FrameworkAPI('emberjs', 'ember.js');
-export const vueData = new FrameworkAPI('vuejs', 'vue');
+//moved to store files
 
 // //FORKS (total count)
-// reactData.fetchForks();
-// angularData.fetchForks();
-// emberData.fetchForks();
-// vueData.fetchForks();
+// reactAPI.fetchForks();
+// angularAPI.fetchForks();
+// emberAPI.fetchForks();
+// vueAPI.fetchForks();
 // setTimeout(() => console.log('FORKS'), 1000);
-// setTimeout(() => console.log('react', reactData.forks), 1000);
-// setTimeout(() => console.log('angular', angularData.forks), 1000);
-// setTimeout(() => console.log('ember', emberData.forks), 1000);
-// setTimeout(() => console.log('vue', vueData.forks), 1000);
+// setTimeout(() => console.log('react', reactAPI.forks), 1000);
+// setTimeout(() => console.log('angular', angularAPI.forks), 1000);
+// setTimeout(() => console.log('ember', emberAPI.forks), 1000);
+// setTimeout(() => console.log('vue', vueAPI.forks), 1000);
 
 // //COMMITS (past year)
-// reactData.fetchCommits();
-// angularData.fetchCommits();
-// emberData.fetchCommits();
-// vueData.fetchCommits();
+// reactAPI.fetchCommits();
+// angularAPI.fetchCommits();
+// emberAPI.fetchCommits();
+// vueAPI.fetchCommits();
 // setTimeout(() => console.log('COMMITS (past year)'), 1000);
-// setTimeout(() => console.log('react', reactData.commits), 1000);
-// setTimeout(() => console.log('angular', angularData.commits), 1000);
-// setTimeout(() => console.log('ember', emberData.commits), 1000);
-// setTimeout(() => console.log('vue', vueData.commits), 1000);
+// setTimeout(() => console.log('react', reactAPI.commits), 1000);
+// setTimeout(() => console.log('angular', angularAPI.commits), 1000);
+// setTimeout(() => console.log('ember', emberAPI.commits), 1000);
+// setTimeout(() => console.log('vue', vueAPI.commits), 1000);
 
 // //ISSUES (closed total)
-// reactData.fetchClosedIssues();
-// angularData.fetchClosedIssues();
-// emberData.fetchClosedIssues();
-// vueData.fetchClosedIssues();
+// reactAPI.fetchClosedIssues();
+// angularAPI.fetchClosedIssues();
+// emberAPI.fetchClosedIssues();
+// vueAPI.fetchClosedIssues();
 // setTimeout(() => console.log('ISSUES (closed)'), 1000);
-// setTimeout(() => console.log('react', reactData.closedIssues), 1000);
-// setTimeout(() => console.log('angular', angularData.closedIssues), 1000);
-// setTimeout(() => console.log('ember', emberData.closedIssues), 1000);
-// setTimeout(() => console.log('vue', vueData.closedIssues), 1000);
+// setTimeout(() => console.log('react', reactAPI.closedIssues), 1000);
+// setTimeout(() => console.log('angular', angularAPI.closedIssues), 1000);
+// setTimeout(() => console.log('ember', emberAPI.closedIssues), 1000);
+// setTimeout(() => console.log('vue', vueAPI.closedIssues), 1000);
