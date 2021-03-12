@@ -14,7 +14,6 @@ import {
 } from './store/index.js';
 
 import store from './store/index.js';
-import vue from './store/vue.js';
 store.setInitialState();
 
 //ELEMENTS TO RENDER
@@ -53,35 +52,28 @@ function render(prevState, state) {
 render(store.prevState, store.state);
 store.subscribe(render);
 
-//EVENT LISTENERS
+//EVENT LISTENERS (click to sort ASC/DESC functionality)
+//
+//WORK IN PROGRESS - finish this section!
+//
+document.getElementById('forks-header').addEventListener('click', function () {
+  alert('you clicked the FORKS header, sort functionality coming soon :)');
+});
 
-// document.getElementById('increment').addEventListener('click', function () {
-//   store.dispatch({ type: 'INCREMENT' });
-// });
+document
+  .getElementById('commits-header')
+  .addEventListener('click', function () {
+    alert('you clicked the COMMITS header, sort functionality coming soon :)');
+  });
 
-// document.getElementById('decrement').addEventListener('click', function () {
-//   store.dispatch({ type: 'DECREMENT' });
-// });
-
-// document
-//   .getElementById('incrementIfOdd')
-//   .addEventListener('click', function () {
-//     if (store.getState() % 2 !== 0) {
-//       store.dispatch({ type: 'INCREMENT' });
-//     }
-//   });
-
-// document
-//   .getElementById('incrementAsync')
-//   .addEventListener('click', function () {
-//     setTimeout(function () {
-//       store.dispatch({ type: 'INCREMENT' });
-//     }, 1000);
-//   });
+document.getElementById('issues-header').addEventListener('click', function () {
+  alert('you clicked the ISSUES header, sort functionality coming soon :)');
+});
 
 //STORE STATE TESTING
 console.log(store.getState());
 
+//INITIAL API CALLS via Thunks
 getReactForksThunk();
 getReactCommitsThunk();
 getReactIssuesClosedThunk();
@@ -98,4 +90,33 @@ getVueForksThunk();
 getVueCommitsThunk();
 getVueIssuesClosedThunk();
 
-setTimeout(() => console.log(store.state), 1000);
+//see state change after initial API call
+setTimeout(() => console.log(store.state), 2000);
+
+/* REPEAT API Calls
+ * Calls every 5 min (300000ms), due to 4x3 = 12 calls, and 60 calls/hour limit, 60/12 = 5 min. intervals
+ */
+
+setInterval(() => {
+  getReactForksThunk();
+  getReactCommitsThunk();
+  getReactIssuesClosedThunk();
+
+  getAngularForksThunk();
+  getAngularCommitsThunk();
+  getAngularIssuesClosedThunk();
+
+  getEmberForksThunk();
+  getEmberCommitsThunk();
+  getEmberIssuesClosedThunk();
+
+  getVueForksThunk();
+  getVueCommitsThunk();
+  getVueIssuesClosedThunk();
+
+  showUpdatedState();
+}, 300000);
+
+function showUpdatedState() {
+  setTimeout(() => console.log(store.state), 2000);
+}
