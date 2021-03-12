@@ -28,12 +28,14 @@ p {
   font-size: 2em;
 }
 
-table,
-th,
-td {
+table {
   border: 2px solid white;
-  border-collapse: collapse;
   border-radius: 10px;
+}
+
+th {
+  border: 1px solid white;
+  border-radius: 5px;
 }
 
 th,
