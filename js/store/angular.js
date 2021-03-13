@@ -5,11 +5,13 @@ import store from './index.js';
 const angularAPI = new FrameworkAPI('angular', 'angular.js');
 
 //ACTION TYPES
+const GET_ANGULAR_SCORE = 'GET_ANGULAR_SCORE';
 const GET_ANGULAR_FORKS = 'GET_ANGULAR_FORKS';
 const GET_ANGULAR_COMMITS = 'GET_ANGULAR_COMMITS';
 const GET_ANGULAR_ISSUES_CLOSED = 'GET_ANGULAR_ISSUES_CLOSED';
 
 //ACTION CREATORS
+const getAngularScore = (score) => ({ type: GET_ANGULAR_SCORE, score });
 const getAngularForks = (forks) => ({ type: GET_ANGULAR_FORKS, forks });
 const getAngularCommits = (commits) => ({ type: GET_ANGULAR_COMMITS, commits });
 const getAngularIssuesClosed = (issuesClosed) => ({
@@ -18,6 +20,15 @@ const getAngularIssuesClosed = (issuesClosed) => ({
 });
 
 //THUNKS
+export function getAngularScoreThunk() {
+  const score =
+    Math.floor(store.state.angular.forks / 10000) +
+    Math.floor(store.state.angular.commits / 100) +
+    Math.floor(store.state.angular.issuesClosed / 1000);
+
+  store.dispatch(getAngularScore(score));
+}
+
 export function getAngularForksThunk() {
   angularAPI
     .fetchForks()
@@ -51,6 +62,8 @@ export const getAngularIssuesClosedThunk = () => {
 
 //INITIAL STATE
 const initialState = {
+  name: 'angular',
+  score: 0,
   forks: 0,
   commits: 0,
   issuesClosed: 0,
@@ -59,13 +72,14 @@ const initialState = {
 //REDUCER
 export default function angular(state = initialState, action) {
   switch (action.type) {
+    case GET_ANGULAR_SCORE:
+      return { ...state, score: action.score };
     case GET_ANGULAR_FORKS:
       return { ...state, forks: action.forks };
     case GET_ANGULAR_COMMITS:
       return { ...state, commits: action.commits };
     case GET_ANGULAR_ISSUES_CLOSED:
       return { ...state, issuesClosed: action.issuesClosed };
-
     default:
       return state;
   }

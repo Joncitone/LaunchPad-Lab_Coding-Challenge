@@ -5,11 +5,13 @@ import store from './index.js';
 const reactAPI = new FrameworkAPI('facebook', 'react');
 
 //ACTION TYPES
+const GET_REACT_SCORE = 'GET_REACT_SCORE';
 const GET_REACT_FORKS = 'GET_REACT_FORKS';
 const GET_REACT_COMMITS = 'GET_REACT_COMMITS';
 const GET_REACT_ISSUES_CLOSED = 'GET_REACT_ISSUES_CLOSED';
 
 //ACTION CREATORS
+const getReactScore = (score) => ({ type: GET_REACT_SCORE, score });
 const getReactForks = (forks) => ({ type: GET_REACT_FORKS, forks });
 const getReactCommits = (commits) => ({ type: GET_REACT_COMMITS, commits });
 const getReactIssuesClosed = (issuesClosed) => ({
@@ -18,6 +20,15 @@ const getReactIssuesClosed = (issuesClosed) => ({
 });
 
 //THUNKS
+export function getReactScoreThunk() {
+  const score =
+    Math.floor(store.state.react.forks / 10000) +
+    Math.floor(store.state.react.commits / 100) +
+    Math.floor(store.state.react.issuesClosed / 1000);
+
+  store.dispatch(getReactScore(score));
+}
+
 export function getReactForksThunk() {
   reactAPI
     .fetchForks()
@@ -51,6 +62,8 @@ export const getReactIssuesClosedThunk = () => {
 
 //INITIAL STATE
 const initialState = {
+  name: 'react',
+  score: 0,
   forks: 0,
   commits: 0,
   issuesClosed: 0,
@@ -59,6 +72,8 @@ const initialState = {
 //REDUCER
 export default function react(state = initialState, action) {
   switch (action.type) {
+    case GET_REACT_SCORE:
+      return { ...state, score: action.score };
     case GET_REACT_FORKS:
       return { ...state, forks: action.forks };
     case GET_REACT_COMMITS:

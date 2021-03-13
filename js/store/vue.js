@@ -5,11 +5,13 @@ import store from './index.js';
 const vueAPI = new FrameworkAPI('vuejs', 'vue');
 
 //ACTION TYPES
+const GET_VUE_SCORE = 'GET_VUE_SCORE';
 const GET_VUE_FORKS = 'GET_VUE_FORKS';
 const GET_VUE_COMMITS = 'GET_VUE_COMMITS';
 const GET_VUE_ISSUES_CLOSED = 'GET_VUE_ISSUES_CLOSED';
 
 //ACTION CREATORS
+const getVueScore = (score) => ({ type: GET_VUE_SCORE, score });
 const getVueForks = (forks) => ({ type: GET_VUE_FORKS, forks });
 const getVueCommits = (commits) => ({ type: GET_VUE_COMMITS, commits });
 const getVueIssuesClosed = (issuesClosed) => ({
@@ -18,6 +20,15 @@ const getVueIssuesClosed = (issuesClosed) => ({
 });
 
 //THUNKS
+export function getVueScoreThunk() {
+  const score =
+    Math.floor(store.state.vue.forks / 10000) +
+    Math.floor(store.state.vue.commits / 100) +
+    Math.floor(store.state.vue.issuesClosed / 1000);
+
+  store.dispatch(getVueScore(score));
+}
+
 export function getVueForksThunk() {
   vueAPI
     .fetchForks()
@@ -51,6 +62,8 @@ export const getVueIssuesClosedThunk = () => {
 
 //INITIAL STATE
 const initialState = {
+  name: 'vue',
+  score: 0,
   forks: 0,
   commits: 0,
   issuesClosed: 0,
@@ -59,6 +72,8 @@ const initialState = {
 //REDUCER
 export default function vue(state = initialState, action) {
   switch (action.type) {
+    case GET_VUE_SCORE:
+      return { ...state, score: action.score };
     case GET_VUE_FORKS:
       return { ...state, forks: action.forks };
     case GET_VUE_COMMITS:
