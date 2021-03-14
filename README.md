@@ -21,6 +21,8 @@ https://joncitone.github.io/launchpad-lab_coding-challenge
 
 ## Features
 
+- Project Board
+  - Kanban board to plan out the project
 - LaunchPad Lab styling
   - Proxima-Nova font
   - Blue linear gradient
