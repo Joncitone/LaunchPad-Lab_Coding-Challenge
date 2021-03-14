@@ -12,12 +12,12 @@ export default class FrameworkAPI {
   }
   fetchCommits() {
     return fetch(
-      `http://api.github.com/repos/${this.owner}/${this.repo}/stats/participation`
+      `https://api.github.com/repos/${this.owner}/${this.repo}/stats/participation`
     );
   }
   fetchIssuesClosed() {
     return fetch(
-      `http://api.github.com/search/issues?q=repo:${this.owner}/${this.repo}+type:issue+state:closed`
+      `https://api.github.com/search/issues?q=repo:${this.owner}/${this.repo}+type:issue+state:closed`
     );
   }
 }
