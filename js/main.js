@@ -21,7 +21,14 @@ import store from './store/index.js';
 store.setInitialState();
 
 //ELEMENTS TO RENDER
-const tableContainer = document.getElementById('table-container');
+const scoreHeader = document.getElementById('score-header');
+const forksHeader = document.getElementById('forks-header');
+const commitsHeader = document.getElementById('commits-header');
+const issuesHeader = document.getElementById('issues-header');
+const rowOne = document.getElementById('row-one');
+const rowTwo = document.getElementById('row-two');
+const rowThree = document.getElementById('row-three');
+const rowFour = document.getElementById('row-four');
 const reactScore = document.getElementById('react-score');
 const angularScore = document.getElementById('angular-score');
 const emberScore = document.getElementById('ember-score');
@@ -61,33 +68,154 @@ function render(prevState, state) {
 render(store.prevState, store.state);
 store.subscribe(render);
 
-//EVENT LISTENERS (click to sort ASC/DESC functionality)
-//
-//WORK IN PROGRESS - finish this section!
-//
+//Establish Framework Names and sort by condition
+let frameworks = [];
+
+function clearAndPopulateFrameworks(prevState, state) {
+  if (prevState !== state) {
+    frameworks = [];
+    frameworks.push(store.state.react);
+    frameworks.push(store.state.angular);
+    frameworks.push(store.state.ember);
+    frameworks.push(store.state.vue);
+  }
+}
+store.subscribe(clearAndPopulateFrameworks);
+//Switching Sort By Condition
+
+function sortByCondition(toggle, condition) {
+  frameworks.sort((a, b) => {
+    return toggle ? b[condition] - a[condition] : a[condition] - b[condition];
+  });
+}
+
+//Initial sort DESC by Score
+setTimeout(() => sortByCondition(true, 'score'), 3000);
+
+//TOGGLES FOR SORTING
+let scoreToggle = false;
+let forksToggle = false;
+let commitsToggle = false;
+let issuesToggle = false;
+
+//EVENT LISTENERS FOR SORTING w/ visual indicators
 document.getElementById('score-header').addEventListener('click', function () {
-  alert('you clicked the SCORE header, sort functionality coming soon :)');
+  scoreToggle = !scoreToggle;
+  forksToggle = false;
+  commitsToggle = false;
+  issuesToggle = false;
+
+  sortByCondition(scoreToggle, 'score');
+  reRenderTable();
+
+  scoreHeader.setAttribute('class', 'selected');
+  forksHeader.removeAttribute('class');
+  commitsHeader.removeAttribute('class');
+  issuesHeader.removeAttribute('class');
+
+  forksHeader.innerHTML = `<th id="forks-header">Forks (total)</th>`;
+  commitsHeader.innerHTML = `<th id="commits-header">Commits (52-week total)</th>`;
+  issuesHeader.innerHTML = `<th id="issues-header">Issues Closed (total)</th>`;
+
+  if (scoreToggle) {
+    scoreHeader.innerHTML = `
+      <th id="score-header">Composite Score &#9660;</th>
+    `;
+  } else {
+    scoreHeader.innerHTML = `
+      <th id="score-header">Composite Score &#9650;</th>
+    `;
+  }
 });
 
 document.getElementById('forks-header').addEventListener('click', function () {
-  alert('you clicked the FORKS header, sort functionality coming soon :)');
+  scoreToggle = false;
+  forksToggle = !forksToggle;
+  commitsToggle = false;
+  issuesToggle = false;
+
+  sortByCondition(forksToggle, 'forks');
+  reRenderTable();
+
+  scoreHeader.removeAttribute('class');
+  forksHeader.setAttribute('class', 'selected');
+  commitsHeader.removeAttribute('class');
+  issuesHeader.removeAttribute('class');
+
+  scoreHeader.innerHTML = `<th id="score-header">Composite Score</th>`;
+  commitsHeader.innerHTML = `<th id="commits-header">Commits (52-week total)</th>`;
+  issuesHeader.innerHTML = `<th id="issues-header">Issues Closed (total)</th>`;
+
+  if (forksToggle) {
+    forksHeader.innerHTML = `
+      <th id="score-header">Forks (total) &#9660;</th>
+    `;
+  } else {
+    forksHeader.innerHTML = `
+      <th id="score-header">Forks (total) &#9650;</th>
+    `;
+  }
 });
 
-document
-  .getElementById('commits-header')
-  .addEventListener('click', function () {
-    alert('you clicked the COMMITS header, sort functionality coming soon :)');
-  });
+commitsHeader.addEventListener('click', function () {
+  scoreToggle = false;
+  forksToggle = false;
+  commitsToggle = !commitsToggle;
+  issuesToggle = false;
 
-document.getElementById('issues-header').addEventListener('click', function () {
-  alert('you clicked the ISSUES header, sort functionality coming soon :)');
+  sortByCondition(commitsToggle, 'commits');
+  reRenderTable();
+
+  scoreHeader.removeAttribute('class');
+  forksHeader.removeAttribute('class');
+  commitsHeader.setAttribute('class', 'selected');
+  issuesHeader.removeAttribute('class');
+
+  scoreHeader.innerHTML = `<th id="score-header">Composite Score</th>`;
+  forksHeader.innerHTML = `<th id="forks-header">Forks (total)</th>`;
+  issuesHeader.innerHTML = `<th id="issues-header">Issues Closed (total)</th>`;
+
+  if (commitsToggle) {
+    commitsHeader.innerHTML = `
+      <th id="score-header">Commits (52-week total) &#9660;</th>
+    `;
+  } else {
+    commitsHeader.innerHTML = `
+      <th id="score-header">Commits (52-week total) &#9650;</th>
+    `;
+  }
 });
 
-//STORE STATE TESTING
-console.log(store.getState());
+issuesHeader.addEventListener('click', function () {
+  scoreToggle = false;
+  forksToggle = false;
+  commitsToggle = false;
+  issuesToggle = !issuesToggle;
+
+  sortByCondition(issuesToggle, 'issuesClosed');
+  reRenderTable();
+
+  scoreHeader.removeAttribute('class');
+  forksHeader.removeAttribute('class');
+  commitsHeader.removeAttribute('class');
+  issuesHeader.setAttribute('class', 'selected');
+
+  scoreHeader.innerHTML = `<th id="score-header">Composite Score</th>`;
+  forksHeader.innerHTML = `<th id="forks-header">Forks (total)</th>`;
+  commitsHeader.innerHTML = `<th id="commits-header">Commits (52-week total)</th>`;
+
+  if (issuesToggle) {
+    issuesHeader.innerHTML = `
+      <th id="score-header">Issues Closed (total) &#9660;</th>
+    `;
+  } else {
+    issuesHeader.innerHTML = `
+      <th id="score-header">Issues Closed (total) &#9650;</th>
+    `;
+  }
+});
 
 //INITIAL API CALLS function (via thunks) and invocation, re-used later
-
 function callGithubAPIs() {
   getReactForksThunk();
   getReactCommitsThunk();
@@ -130,128 +258,59 @@ function calculateCompositeScores() {
 }
 calculateCompositeScores();
 
-//Establish Framework Names and sort by condition
-let frameworks = [];
-
-function clearAndPopulateFrameworks(prevState, state) {
-  if (prevState !== state) {
-    frameworks = [];
-    frameworks.push(store.state.react);
-    frameworks.push(store.state.angular);
-    frameworks.push(store.state.ember);
-    frameworks.push(store.state.vue);
-  }
-}
-store.subscribe(clearAndPopulateFrameworks);
-
-setTimeout(() => console.log('frameworks before', frameworks), 1000);
-
-//Switching Sort By Condition
-function sortByCondition(toggle, condition) {
-  frameworks.sort((a, b) => {
-    return toggle ? b[condition] - a[condition] : a[condition] - b[condition];
-  });
-}
-
-//Initial Sort DESC by Score
-setTimeout(() => {
-  sortByCondition(true, 'score');
-  console.log('frameworks after', frameworks);
-}, 3000);
-
 //ORDER TABLE by Composite Scores calculated above
 setTimeout(() => {
-  tableContainer.innerHTML = `
-    <table>
-      <thead>
-        <tr>
-          <th>Framework</th>
-          <th id="score-header" class="selected">Composite Score</th>
-          <th id="forks-header">Forks (total)</th>
-          <th id="commits-header">Commits (52-week total)</th>
-          <th id="issues-header">Issues Closed (total)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr id="row-one">
-          <td>${frameworks[0].name}</td>
-          <td id="${frameworks[0].name}-score">${frameworks[0].score}</td>
-          <td id="${frameworks[0].name}-forks">${frameworks[0].forks}</td>
-          <td id="${frameworks[0].name}-commits">${frameworks[0].commits}</td>
-          <td id="${frameworks[0].name}-issues-closed">${frameworks[0].issuesClosed}</td>
-        </tr>
-        <tr id="row-two">
-          <td>${frameworks[1].name}</td>
-          <td id="${frameworks[1].name}-score">${frameworks[1].score}</td>
-          <td id="${frameworks[1].name}-forks">${frameworks[1].forks}</td>
-          <td id="${frameworks[1].name}-commits">${frameworks[1].commits}</td>
-          <td id="${frameworks[1].name}-issues-closed">${frameworks[1].issuesClosed}</td>
-        </tr>
-        <tr id="row-three">
-          <td>${frameworks[2].name}</td>
-          <td id="${frameworks[2].name}-score">${frameworks[2].score}</td>
-          <td id="${frameworks[2].name}-forks">${frameworks[2].forks}</td>
-          <td id="${frameworks[2].name}-commits">${frameworks[2].commits}</td>
-          <td id="${frameworks[2].name}-issues-closed">${frameworks[2].issuesClosed}</td>
-        </tr>
-        <tr id="row-four">
-          <td>${frameworks[3].name}</td>
-          <td id="${frameworks[3].name}-score">${frameworks[3].score}</td>
-          <td id="${frameworks[3].name}-forks">${frameworks[3].forks}</td>
-          <td id="${frameworks[3].name}-commits">${frameworks[3].commits}</td>
-          <td id="${frameworks[3].name}-issues-closed">${frameworks[3].issuesClosed}</td>
-        </tr>
-      </tbody>
-    </table>
-  `;
+  reRenderTable();
 }, 4000);
 
-function reRenderOnColumnClick(column) {
-  setTimeout(() => {
-    tableContainer.innerHTML = `
-    <table>
-      <thead>
-        <tr>
-          <th>Framework</th>
-          <th id="score-header" class="selected">Composite Score</th>
-          <th id="forks-header">Forks (total)</th>
-          <th id="commits-header">Commits (52-week total)</th>
-          <th id="issues-header">Issues Closed (total)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr id="row-one">
-          <td>${frameworks[0].name}</td>
-          <td id="${frameworks[0].name}-score">${frameworks[0].score}</td>
-          <td id="${frameworks[0].name}-forks">${frameworks[0].forks}</td>
-          <td id="${frameworks[0].name}-commits">${frameworks[0].commits}</td>
-          <td id="${frameworks[0].name}-issues-closed">${frameworks[0].issuesClosed}</td>
-        </tr>
-        <tr id="row-two">
-          <td>${frameworks[1].name}</td>
-          <td id="${frameworks[1].name}-score">${frameworks[1].score}</td>
-          <td id="${frameworks[1].name}-forks">${frameworks[1].forks}</td>
-          <td id="${frameworks[1].name}-commits">${frameworks[1].commits}</td>
-          <td id="${frameworks[1].name}-issues-closed">${frameworks[1].issuesClosed}</td>
-        </tr>
-        <tr id="row-three">
-          <td>${frameworks[2].name}</td>
-          <td id="${frameworks[2].name}-score">${frameworks[2].score}</td>
-          <td id="${frameworks[2].name}-forks">${frameworks[2].forks}</td>
-          <td id="${frameworks[2].name}-commits">${frameworks[2].commits}</td>
-          <td id="${frameworks[2].name}-issues-closed">${frameworks[2].issuesClosed}</td>
-        </tr>
-        <tr id="row-four">
-          <td>${frameworks[3].name}</td>
-          <td id="${frameworks[3].name}-score">${frameworks[3].score}</td>
-          <td id="${frameworks[3].name}-forks">${frameworks[3].forks}</td>
-          <td id="${frameworks[3].name}-commits">${frameworks[3].commits}</td>
-          <td id="${frameworks[3].name}-issues-closed">${frameworks[3].issuesClosed}</td>
-        </tr>
-      </tbody>
-    </table>
+function reRenderTable() {
+  rowOne.innerHTML = `
+    <td>
+      ${frameworks[0].name[0].toUpperCase() + frameworks[0].name.slice(1)}
+    </td>
+    <td id="${frameworks[0].name}-score">${frameworks[0].score}</td>
+    <td id="${frameworks[0].name}-forks">${frameworks[0].forks}</td>
+    <td id="${frameworks[0].name}-commits">${frameworks[0].commits}</td>
+    <td id="${frameworks[0].name}-issues-closed">
+      ${frameworks[0].issuesClosed}
+    </td>
   `;
-  }, 4000);
+
+  rowTwo.innerHTML = `
+    <td>
+      ${frameworks[1].name[0].toUpperCase() + frameworks[1].name.slice(1)}
+    </td>
+    <td id="${frameworks[1].name}-score">${frameworks[1].score}</td>
+    <td id="${frameworks[1].name}-forks">${frameworks[1].forks}</td>
+    <td id="${frameworks[1].name}-commits">${frameworks[1].commits}</td>
+    <td id="${frameworks[1].name}-issues-closed">
+      ${frameworks[1].issuesClosed}
+    </td>
+  `;
+
+  rowThree.innerHTML = `
+    <td>
+      ${frameworks[2].name[0].toUpperCase() + frameworks[2].name.slice(1)}
+    </td>
+    <td id="${frameworks[2].name}-score">${frameworks[2].score}</td>
+    <td id="${frameworks[2].name}-forks">${frameworks[2].forks}</td>
+    <td id="${frameworks[2].name}-commits">${frameworks[2].commits}</td>
+    <td id="${frameworks[2].name}-issues-closed">
+      ${frameworks[2].issuesClosed}
+    </td>
+  `;
+
+  rowFour.innerHTML = `
+    <td>
+      ${frameworks[3].name[0].toUpperCase() + frameworks[3].name.slice(1)}
+    </td>
+    <td id="${frameworks[3].name}-score">${frameworks[3].score}</td>
+    <td id="${frameworks[3].name}-forks">${frameworks[3].forks}</td>
+    <td id="${frameworks[3].name}-commits">${frameworks[3].commits}</td>
+    <td id="${frameworks[3].name}-issues-closed">
+      ${frameworks[3].issuesClosed}
+    </td>
+  `;
 }
 
 /* REPEAT API Calls
