@@ -26,26 +26,17 @@ export function getAngularScoreThunk() {
   store.dispatch(getAngularScore(score));
 }
 
-export function getAngularForksAndStarsThunk() {
+export function getAngularForksStarsIssuesThunk() {
   angularAPI
-    .fetchForksAndStars()
+    .fetchForksStarsIssues()
     .then((response) => response.json())
     .then((data) => {
       store.dispatch(getAngularForks(data.items[0].forks));
       store.dispatch(getAngularStars(data.items[0].watchers));
+      store.dispatch(getAngularIssues(data.items[0].open_issues));
     })
     .catch((error) => console.error(error));
 }
-
-export const getAngularIssuesThunk = () => {
-  angularAPI
-    .fetchIssues()
-    .then((response) => response.json())
-    .then((data) => {
-      store.dispatch(getAngularIssues(data.total_count));
-    })
-    .catch((error) => console.error(error));
-};
 
 //INITIAL STATE
 const initialState = {

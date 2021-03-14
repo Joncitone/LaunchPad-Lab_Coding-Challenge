@@ -26,26 +26,17 @@ export function getEmberScoreThunk() {
   store.dispatch(getEmberScore(score));
 }
 
-export function getEmberForksAndStarsThunk() {
+export function getEmberForksStarsIssuesThunk() {
   emberAPI
-    .fetchForksAndStars()
+    .fetchForksStarsIssues()
     .then((response) => response.json())
     .then((data) => {
       store.dispatch(getEmberForks(data.items[0].forks));
       store.dispatch(getEmberStars(data.items[0].watchers));
+      store.dispatch(getEmberIssues(data.items[0].open_issues));
     })
     .catch((error) => console.error(error));
 }
-
-export const getEmberIssuesThunk = () => {
-  emberAPI
-    .fetchIssues()
-    .then((response) => response.json())
-    .then((data) => {
-      store.dispatch(getEmberIssues(data.total_count));
-    })
-    .catch((error) => console.error(error));
-};
 
 //INITIAL STATE
 const initialState = {

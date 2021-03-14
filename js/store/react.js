@@ -26,13 +26,14 @@ export function getReactScoreThunk() {
   store.dispatch(getReactScore(score));
 }
 
-export function getReactForksAndStarsThunk() {
+export function getReactForksStarsIssuesThunk() {
   reactAPI
-    .fetchForksAndStars()
+    .fetchForksStarsIssues()
     .then((response) => response.json())
     .then((data) => {
       store.dispatch(getReactForks(data.items[0].forks));
       store.dispatch(getReactStars(data.items[0].watchers));
+      store.dispatch(getReactIssues(data.items[0].open_issues));
     })
     .catch((error) => console.error(error));
 }

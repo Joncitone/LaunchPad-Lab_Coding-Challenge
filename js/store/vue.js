@@ -26,26 +26,17 @@ export function getVueScoreThunk() {
   store.dispatch(getVueScore(score));
 }
 
-export function getVueForksAndStarsThunk() {
+export function getVueForksStarsIssuesThunk() {
   vueAPI
-    .fetchForksAndStars()
+    .fetchForksStarsIssues()
     .then((response) => response.json())
     .then((data) => {
       store.dispatch(getVueForks(data.items[0].forks));
       store.dispatch(getVueStars(data.items[0].watchers));
+      store.dispatch(getVueIssues(data.items[0].open_issues));
     })
     .catch((error) => console.error(error));
 }
-
-export const getVueIssuesThunk = () => {
-  vueAPI
-    .fetchIssues()
-    .then((response) => response.json())
-    .then((data) => {
-      store.dispatch(getVueIssues(data.total_count));
-    })
-    .catch((error) => console.error(error));
-};
 
 //INITIAL STATE
 const initialState = {

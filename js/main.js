@@ -1,16 +1,12 @@
 import {
   getReactScoreThunk,
-  getReactForksAndStarsThunk,
-  getReactIssuesThunk,
+  getReactForksStarsIssuesThunk,
   getAngularScoreThunk,
-  getAngularForksAndStarsThunk,
-  getAngularIssuesThunk,
+  getAngularForksStarsIssuesThunk,
   getEmberScoreThunk,
-  getEmberForksAndStarsThunk,
-  getEmberIssuesThunk,
+  getEmberForksStarsIssuesThunk,
   getVueScoreThunk,
-  getVueForksAndStarsThunk,
-  getVueIssuesThunk,
+  getVueForksStarsIssuesThunk,
 } from './store/index.js';
 
 import store from './store/index.js';
@@ -93,9 +89,6 @@ function sortByCondition(toggle, condition) {
   }
 }
 
-//Initial sort DESC by Score
-setTimeout(() => sortByCondition(true, 'score'), 3000);
-
 //TOGGLES FOR SORTING
 let scoreToggle = false;
 let forksToggle = false;
@@ -119,7 +112,7 @@ scoreHeader.addEventListener('click', function () {
 
   forksHeader.innerHTML = `<th id="forks-header">Forks</th>`;
   starsHeader.innerHTML = `<th id="stars-header">Stars</th>`;
-  issuesHeader.innerHTML = `<th id="issues-header">Issues</th>`;
+  issuesHeader.innerHTML = `<th id="issues-header">Issues (open)</th>`;
 
   if (scoreToggle) {
     scoreHeader.innerHTML = `
@@ -148,7 +141,7 @@ forksHeader.addEventListener('click', function () {
 
   scoreHeader.innerHTML = `<th id="score-header">Score</th>`;
   starsHeader.innerHTML = `<th id="stars-header">Stars</th>`;
-  issuesHeader.innerHTML = `<th id="issues-header">Issues</th>`;
+  issuesHeader.innerHTML = `<th id="issues-header">Issues (open)</th>`;
 
   if (forksToggle) {
     forksHeader.innerHTML = `
@@ -177,7 +170,7 @@ starsHeader.addEventListener('click', function () {
 
   scoreHeader.innerHTML = `<th id="score-header">Score</th>`;
   forksHeader.innerHTML = `<th id="forks-header">Forks</th>`;
-  issuesHeader.innerHTML = `<th id="issues-header">Issues</th>`;
+  issuesHeader.innerHTML = `<th id="issues-header">Issues (open)</th>`;
 
   if (starsToggle) {
     starsHeader.innerHTML = `
@@ -210,25 +203,21 @@ issuesHeader.addEventListener('click', function () {
 
   if (issuesToggle) {
     issuesHeader.innerHTML = `
-      <th id="score-header">Issues  &#9660;</th>
+      <th id="score-header">Issues (open) &#9660;</th>
     `;
   } else {
     issuesHeader.innerHTML = `
-      <th id="score-header">Issues  &#9650;</th>
+      <th id="score-header">Issues (open) &#9650;</th>
     `;
   }
 });
 
 //INITIAL API CALLS function (via thunks) and invocation, re-used later
 function callGithubAPIs() {
-  getReactForksAndStarsThunk();
-  getReactIssuesThunk();
-  getAngularForksAndStarsThunk();
-  getAngularIssuesThunk();
-  getEmberForksAndStarsThunk();
-  getEmberIssuesThunk();
-  getVueForksAndStarsThunk();
-  getVueIssuesThunk();
+  getReactForksStarsIssuesThunk();
+  getAngularForksStarsIssuesThunk();
+  getEmberForksStarsIssuesThunk();
+  getVueForksStarsIssuesThunk();
 
   showUpdatedState();
 }
@@ -258,6 +247,8 @@ function calculateCompositeScores() {
 }
 calculateCompositeScores();
 
+//Initial sort DESC by Score
+setTimeout(() => sortByCondition(true, 'score'), 3000);
 //ORDER TABLE by Scores calculated above
 setTimeout(() => {
   reRenderTable();
