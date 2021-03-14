@@ -73,20 +73,12 @@ function clearAndPopulateFrameworks(prevState, state) {
   }
 }
 store.subscribe(clearAndPopulateFrameworks);
-//Switching Sort By Condition
 
+//Switching Sort By Condition
 function sortByCondition(toggle, condition) {
-  if (condition === 'name') {
-    frameworks.sort((a, b) => {
-      return toggle
-        ? b[condition] >= a[condition]
-        : a[condition] < b[condition];
-    });
-  } else {
-    frameworks.sort((a, b) => {
-      return toggle ? b[condition] - a[condition] : a[condition] - b[condition];
-    });
-  }
+  frameworks.sort((a, b) => {
+    return toggle ? b[condition] - a[condition] : a[condition] - b[condition];
+  });
 }
 
 //TOGGLES FOR SORTING
@@ -297,7 +289,7 @@ function reRenderTable() {
 }
 
 /* REPEAT API Calls
- * Calls every 5 min (300000ms), due to 4x3 = 12 calls, and 60 calls/hour limit, 60/12 = 5 min. intervals
+ * Calls every 5 min. Could increase to 4 min. intervals 4calls/4min = 60call/60min.
  */
 setInterval(() => {
   callGithubAPIs();

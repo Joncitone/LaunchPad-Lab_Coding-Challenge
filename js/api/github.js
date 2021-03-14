@@ -10,9 +10,4 @@ export default class FrameworkAPI {
       `https://api.github.com/search/repositories?q=user%3A${this.owner}+repo%3A${this.repo}+${this.repo}`
     );
   }
-  fetchIssues() {
-    return fetch(
-      `https://api.github.com/search/issues?q=repo:${this.owner}/${this.repo}+type:issue`
-    );
-  }
 }
