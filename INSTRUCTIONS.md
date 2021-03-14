@@ -6,7 +6,7 @@ Your challenge is to create a dashboard that helps us make the right choice base
 
 - React: https://github.com/facebook/react
 - Angular: https://github.com/angular/angular.js
-- Ember: https://github.com/emberjs/ember.js/
+- Ember: https://github.com/emberjs/ember.js
 - Vue: https://github.com/vuejs/vue
 
 To really get a sense of how active development is on these frameworks, we need to be able to see updates to the dashboard without a page refresh (do not worry about API rate limits for this challenge). Please choose the 3 most relevant pieces of information from the following:

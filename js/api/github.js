@@ -5,19 +5,14 @@ export default class FrameworkAPI {
     this.owner = owner;
     this.repo = repo;
   }
-  fetchForks() {
+  fetchForksAndStars() {
     return fetch(
       `https://api.github.com/search/repositories?q=user%3A${this.owner}+repo%3A${this.repo}+${this.repo}`
     );
   }
-  fetchCommits() {
+  fetchIssues() {
     return fetch(
-      `https://api.github.com/repos/${this.owner}/${this.repo}/stats/participation`
-    );
-  }
-  fetchIssuesClosed() {
-    return fetch(
-      `https://api.github.com/search/issues?q=repo:${this.owner}/${this.repo}+type:issue+state:closed`
+      `https://api.github.com/search/issues?q=repo:${this.owner}/${this.repo}+type:issue`
     );
   }
 }

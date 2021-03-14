@@ -7,55 +7,42 @@ const vueAPI = new FrameworkAPI('vuejs', 'vue');
 //ACTION TYPES
 const GET_VUE_SCORE = 'GET_VUE_SCORE';
 const GET_VUE_FORKS = 'GET_VUE_FORKS';
-const GET_VUE_COMMITS = 'GET_VUE_COMMITS';
-const GET_VUE_ISSUES_CLOSED = 'GET_VUE_ISSUES_CLOSED';
+const GET_VUE_STARS = 'GET_VUE_STARS';
+const GET_VUE_ISSUES = 'GET_VUE_ISSUES';
 
 //ACTION CREATORS
 const getVueScore = (score) => ({ type: GET_VUE_SCORE, score });
 const getVueForks = (forks) => ({ type: GET_VUE_FORKS, forks });
-const getVueCommits = (commits) => ({ type: GET_VUE_COMMITS, commits });
-const getVueIssuesClosed = (issuesClosed) => ({
-  type: GET_VUE_ISSUES_CLOSED,
-  issuesClosed,
-});
+const getVueStars = (stars) => ({ type: GET_VUE_STARS, stars });
+const getVueIssues = (issues) => ({ type: GET_VUE_ISSUES, issues });
 
 //THUNKS
 export function getVueScoreThunk() {
   const score =
-    Math.floor(store.state.vue.forks / 10000) +
-    Math.floor(store.state.vue.commits / 100) +
-    Math.floor(store.state.vue.issuesClosed / 1000);
+    Math.round(store.state.vue.forks / 1000) +
+    Math.round(store.state.vue.stars / 10000) +
+    Math.round(store.state.vue.issues / 1000);
 
   store.dispatch(getVueScore(score));
 }
 
-export function getVueForksThunk() {
+export function getVueForksAndStarsThunk() {
   vueAPI
-    .fetchForks()
+    .fetchForksAndStars()
     .then((response) => response.json())
     .then((data) => {
       store.dispatch(getVueForks(data.items[0].forks));
+      store.dispatch(getVueStars(data.items[0].watchers));
     })
     .catch((error) => console.error(error));
 }
 
-export const getVueCommitsThunk = () => {
+export const getVueIssuesThunk = () => {
   vueAPI
-    .fetchCommits()
+    .fetchIssues()
     .then((response) => response.json())
     .then((data) => {
-      let commits = data.all.reduce((acc, curr) => acc + curr, 0);
-      store.dispatch(getVueCommits(commits));
-    })
-    .catch((error) => console.error(error));
-};
-
-export const getVueIssuesClosedThunk = () => {
-  vueAPI
-    .fetchIssuesClosed()
-    .then((response) => response.json())
-    .then((data) => {
-      store.dispatch(getVueIssuesClosed(data.total_count));
+      store.dispatch(getVueIssues(data.total_count));
     })
     .catch((error) => console.error(error));
 };
@@ -65,8 +52,8 @@ const initialState = {
   name: 'vue',
   score: 0,
   forks: 0,
-  commits: 0,
-  issuesClosed: 0,
+  stars: 0,
+  issues: 0,
 };
 
 //REDUCER
@@ -76,10 +63,10 @@ export default function vue(state = initialState, action) {
       return { ...state, score: action.score };
     case GET_VUE_FORKS:
       return { ...state, forks: action.forks };
-    case GET_VUE_COMMITS:
-      return { ...state, commits: action.commits };
-    case GET_VUE_ISSUES_CLOSED:
-      return { ...state, issuesClosed: action.issuesClosed };
+    case GET_VUE_STARS:
+      return { ...state, stars: action.stars };
+    case GET_VUE_ISSUES:
+      return { ...state, issues: action.issues };
 
     default:
       return state;

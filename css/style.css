@@ -24,8 +24,9 @@ body {
   align-items: center;
 }
 
-#home-page-header {
-  font-size: 2em;
+p {
+  padding: none;
+  margin: none;
 }
 
 #code-text {
@@ -66,8 +67,10 @@ tbody > tr > td:first-child {
 }
 
 #home-page-header {
-  display: flex;
+  font-size: 2em;
+  text-align: center;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }

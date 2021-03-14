@@ -7,55 +7,42 @@ const reactAPI = new FrameworkAPI('facebook', 'react');
 //ACTION TYPES
 const GET_REACT_SCORE = 'GET_REACT_SCORE';
 const GET_REACT_FORKS = 'GET_REACT_FORKS';
-const GET_REACT_COMMITS = 'GET_REACT_COMMITS';
-const GET_REACT_ISSUES_CLOSED = 'GET_REACT_ISSUES_CLOSED';
+const GET_REACT_STARS = 'GET_REACT_STARS';
+const GET_REACT_ISSUES = 'GET_REACT_ISSUES';
 
 //ACTION CREATORS
 const getReactScore = (score) => ({ type: GET_REACT_SCORE, score });
 const getReactForks = (forks) => ({ type: GET_REACT_FORKS, forks });
-const getReactCommits = (commits) => ({ type: GET_REACT_COMMITS, commits });
-const getReactIssuesClosed = (issuesClosed) => ({
-  type: GET_REACT_ISSUES_CLOSED,
-  issuesClosed,
-});
+const getReactStars = (stars) => ({ type: GET_REACT_STARS, stars });
+const getReactIssues = (issues) => ({ type: GET_REACT_ISSUES, issues });
 
 //THUNKS
 export function getReactScoreThunk() {
   const score =
-    Math.floor(store.state.react.forks / 10000) +
-    Math.floor(store.state.react.commits / 100) +
-    Math.floor(store.state.react.issuesClosed / 1000);
+    Math.round(store.state.react.forks / 1000) +
+    Math.round(store.state.react.stars / 10000) +
+    Math.round(store.state.react.issues / 1000);
 
   store.dispatch(getReactScore(score));
 }
 
-export function getReactForksThunk() {
+export function getReactForksAndStarsThunk() {
   reactAPI
-    .fetchForks()
+    .fetchForksAndStars()
     .then((response) => response.json())
     .then((data) => {
       store.dispatch(getReactForks(data.items[0].forks));
+      store.dispatch(getReactStars(data.items[0].watchers));
     })
     .catch((error) => console.error(error));
 }
 
-export const getReactCommitsThunk = () => {
+export const getReactIssuesThunk = () => {
   reactAPI
-    .fetchCommits()
+    .fetchIssues()
     .then((response) => response.json())
     .then((data) => {
-      let commits = data.all.reduce((acc, curr) => acc + curr, 0);
-      store.dispatch(getReactCommits(commits));
-    })
-    .catch((error) => console.error(error));
-};
-
-export const getReactIssuesClosedThunk = () => {
-  reactAPI
-    .fetchIssuesClosed()
-    .then((response) => response.json())
-    .then((data) => {
-      store.dispatch(getReactIssuesClosed(data.total_count));
+      store.dispatch(getReactIssues(data.total_count));
     })
     .catch((error) => console.error(error));
 };
@@ -65,8 +52,8 @@ const initialState = {
   name: 'react',
   score: 0,
   forks: 0,
-  commits: 0,
-  issuesClosed: 0,
+  stars: 0,
+  issues: 0,
 };
 
 //REDUCER
@@ -76,10 +63,10 @@ export default function react(state = initialState, action) {
       return { ...state, score: action.score };
     case GET_REACT_FORKS:
       return { ...state, forks: action.forks };
-    case GET_REACT_COMMITS:
-      return { ...state, commits: action.commits };
-    case GET_REACT_ISSUES_CLOSED:
-      return { ...state, issuesClosed: action.issuesClosed };
+    case GET_REACT_STARS:
+      return { ...state, stars: action.stars };
+    case GET_REACT_ISSUES:
+      return { ...state, issues: action.issues };
 
     default:
       return state;

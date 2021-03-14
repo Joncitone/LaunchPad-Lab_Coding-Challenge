@@ -35,7 +35,7 @@ returns an object containing an array of items listing the forks as a property, 
 
 ## Commits
 
-GET http://api.github.com/repos/facebook/react/stats/participation
+GET https://api.github.com/repos/facebook/react/stats/participation
 
 returns the last year of commit activity grouped by week oldest to newest
 
@@ -57,7 +57,7 @@ returns the last year of commit activity grouped by week oldest to newest
 
 ## Issues Closed
 
-GET http://api.github.com/search/issues?q=repo:facebook/react+type:issue+state:closed
+GET https://api.github.com/search/issues?q=repo:facebook/react+type:issue+state:closed
 
 returns an object with the total amount of closed issues and a detailed items array
 

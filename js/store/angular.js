@@ -7,55 +7,42 @@ const angularAPI = new FrameworkAPI('angular', 'angular.js');
 //ACTION TYPES
 const GET_ANGULAR_SCORE = 'GET_ANGULAR_SCORE';
 const GET_ANGULAR_FORKS = 'GET_ANGULAR_FORKS';
-const GET_ANGULAR_COMMITS = 'GET_ANGULAR_COMMITS';
-const GET_ANGULAR_ISSUES_CLOSED = 'GET_ANGULAR_ISSUES_CLOSED';
+const GET_ANGULAR_STARS = 'GET_ANGULAR_STARS';
+const GET_ANGULAR_ISSUES = 'GET_ANGULAR_ISSUES';
 
 //ACTION CREATORS
 const getAngularScore = (score) => ({ type: GET_ANGULAR_SCORE, score });
 const getAngularForks = (forks) => ({ type: GET_ANGULAR_FORKS, forks });
-const getAngularCommits = (commits) => ({ type: GET_ANGULAR_COMMITS, commits });
-const getAngularIssuesClosed = (issuesClosed) => ({
-  type: GET_ANGULAR_ISSUES_CLOSED,
-  issuesClosed,
-});
+const getAngularStars = (stars) => ({ type: GET_ANGULAR_STARS, stars });
+const getAngularIssues = (issues) => ({ type: GET_ANGULAR_ISSUES, issues });
 
 //THUNKS
 export function getAngularScoreThunk() {
   const score =
-    Math.floor(store.state.angular.forks / 10000) +
-    Math.floor(store.state.angular.commits / 100) +
-    Math.floor(store.state.angular.issuesClosed / 1000);
+    Math.round(store.state.angular.forks / 1000) +
+    Math.round(store.state.angular.stars / 10000) +
+    Math.round(store.state.angular.issues / 1000);
 
   store.dispatch(getAngularScore(score));
 }
 
-export function getAngularForksThunk() {
+export function getAngularForksAndStarsThunk() {
   angularAPI
-    .fetchForks()
+    .fetchForksAndStars()
     .then((response) => response.json())
     .then((data) => {
       store.dispatch(getAngularForks(data.items[0].forks));
+      store.dispatch(getAngularStars(data.items[0].watchers));
     })
     .catch((error) => console.error(error));
 }
 
-export const getAngularCommitsThunk = () => {
+export const getAngularIssuesThunk = () => {
   angularAPI
-    .fetchCommits()
+    .fetchIssues()
     .then((response) => response.json())
     .then((data) => {
-      let commits = data.all.reduce((acc, curr) => acc + curr, 0);
-      store.dispatch(getAngularCommits(commits));
-    })
-    .catch((error) => console.error(error));
-};
-
-export const getAngularIssuesClosedThunk = () => {
-  angularAPI
-    .fetchIssuesClosed()
-    .then((response) => response.json())
-    .then((data) => {
-      store.dispatch(getAngularIssuesClosed(data.total_count));
+      store.dispatch(getAngularIssues(data.total_count));
     })
     .catch((error) => console.error(error));
 };
@@ -65,8 +52,8 @@ const initialState = {
   name: 'angular',
   score: 0,
   forks: 0,
-  commits: 0,
-  issuesClosed: 0,
+  stars: 0,
+  issues: 0,
 };
 
 //REDUCER
@@ -76,10 +63,10 @@ export default function angular(state = initialState, action) {
       return { ...state, score: action.score };
     case GET_ANGULAR_FORKS:
       return { ...state, forks: action.forks };
-    case GET_ANGULAR_COMMITS:
-      return { ...state, commits: action.commits };
-    case GET_ANGULAR_ISSUES_CLOSED:
-      return { ...state, issuesClosed: action.issuesClosed };
+    case GET_ANGULAR_STARS:
+      return { ...state, stars: action.stars };
+    case GET_ANGULAR_ISSUES:
+      return { ...state, issues: action.issues };
     default:
       return state;
   }

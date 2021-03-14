@@ -2,16 +2,19 @@
 
 ## Deployed Version
 
-Link to deployed version
+https://joncitone.github.io/launchpad-lab_coding-challenge
 
 ## Setup
 
-Steps for running the project in a local enironment
+- ### Launching in the Browser
+- If you have an extension like [Live Server](https://github.com/ritwickdey/vscode-live-server), click Go Live to view the page
 
 ## Technologies Used
 
-List of technologies used
+- Vanilla JS
 
-## Extended Features
+## Features
 
-Filtering, Testing, Changing relevant info
+- Sorting with visual indicators
+- Vanilla JS implementation of Redux
+- Continuous API calls
