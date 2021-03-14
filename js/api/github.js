@@ -21,39 +21,3 @@ export default class FrameworkAPI {
     );
   }
 }
-
-//FrameworkAPI Instances
-//moved to store files
-
-// //FORKS (total count)
-// reactAPI.fetchForks();
-// angularAPI.fetchForks();
-// emberAPI.fetchForks();
-// vueAPI.fetchForks();
-// setTimeout(() => console.log('FORKS'), 1000);
-// setTimeout(() => console.log('react', reactAPI.forks), 1000);
-// setTimeout(() => console.log('angular', angularAPI.forks), 1000);
-// setTimeout(() => console.log('ember', emberAPI.forks), 1000);
-// setTimeout(() => console.log('vue', vueAPI.forks), 1000);
-
-// //COMMITS (past year)
-// reactAPI.fetchCommits();
-// angularAPI.fetchCommits();
-// emberAPI.fetchCommits();
-// vueAPI.fetchCommits();
-// setTimeout(() => console.log('COMMITS (past year)'), 1000);
-// setTimeout(() => console.log('react', reactAPI.commits), 1000);
-// setTimeout(() => console.log('angular', angularAPI.commits), 1000);
-// setTimeout(() => console.log('ember', emberAPI.commits), 1000);
-// setTimeout(() => console.log('vue', vueAPI.commits), 1000);
-
-// //ISSUES (closed total)
-// reactAPI.fetchClosedIssues();
-// angularAPI.fetchClosedIssues();
-// emberAPI.fetchClosedIssues();
-// vueAPI.fetchClosedIssues();
-// setTimeout(() => console.log('ISSUES (closed)'), 1000);
-// setTimeout(() => console.log('react', reactAPI.closedIssues), 1000);
-// setTimeout(() => console.log('angular', angularAPI.closedIssues), 1000);
-// setTimeout(() => console.log('ember', emberAPI.closedIssues), 1000);
-// setTimeout(() => console.log('vue', vueAPI.closedIssues), 1000);
