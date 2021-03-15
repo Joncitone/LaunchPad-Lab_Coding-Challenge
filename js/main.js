@@ -81,127 +81,109 @@ function sortByCondition(toggle, condition) {
   });
 }
 
-//TOGGLES FOR SORTING
-let scoreToggle = false;
-let forksToggle = false;
-let starsToggle = false;
-let issuesToggle = false;
+//Toggles & Toggle-Switching (for ASC/DESC sort switching)
+const toggles = {
+  category: {
+    score: false,
+    forks: false,
+    stars: false,
+    issues: false,
+  },
+  switch(target) {
+    const prevVal = this.category[target];
+
+    this.category = {
+      score: false,
+      forks: false,
+      stars: false,
+      issues: false,
+    };
+
+    this.category[target] = !prevVal;
+  },
+};
+
+//Removes selected class from all headers
+function removeClassFromHeaders() {
+  scoreHeader.removeAttribute('class');
+  forksHeader.removeAttribute('class');
+  starsHeader.removeAttribute('class');
+  issuesHeader.removeAttribute('class');
+}
+
+//Category Header innerHTML Setter
+function resetHeaderInnerHTML() {
+  scoreHeader.innerHTML = `<th id="score-header">Score</th>`;
+  forksHeader.innerHTML = `<th id="forks-header">Forks</th>`;
+  starsHeader.innerHTML = `<th id="stars-header">Stars</th>`;
+  issuesHeader.innerHTML = `<th id="issues-header">Issues (open)</th>`;
+}
 
 //EVENT LISTENERS FOR SORTING w/ visual indicators
 scoreHeader.addEventListener('click', function () {
-  scoreToggle = !scoreToggle;
-  forksToggle = false;
-  starsToggle = false;
-  issuesToggle = false;
+  toggles.switch('score');
+  sortByCondition(toggles.category['score'], 'score');
+  reRenderTableRows();
+  removeClassFromHeaders();
+  resetHeaderInnerHTML();
 
-  sortByCondition(scoreToggle, 'score');
-  reRenderTable();
+  if (toggles.category['score']) {
+    scoreHeader.innerHTML = `<th id="score-header">Score &#9660;</th>`;
+  } else {
+    scoreHeader.innerHTML = `<th id="score-header">Score &#9650;</th>`;
+  }
 
   scoreHeader.setAttribute('class', 'selected');
-  forksHeader.removeAttribute('class');
-  starsHeader.removeAttribute('class');
-  issuesHeader.removeAttribute('class');
-
-  forksHeader.innerHTML = `<th id="forks-header">Forks</th>`;
-  starsHeader.innerHTML = `<th id="stars-header">Stars</th>`;
-  issuesHeader.innerHTML = `<th id="issues-header">Issues (open)</th>`;
-
-  if (scoreToggle) {
-    scoreHeader.innerHTML = `
-      <th id="score-header">Score &#9660;</th>
-    `;
-  } else {
-    scoreHeader.innerHTML = `
-      <th id="score-header">Score &#9650;</th>
-    `;
-  }
 });
 
 forksHeader.addEventListener('click', function () {
-  scoreToggle = false;
-  forksToggle = !forksToggle;
-  starsToggle = false;
-  issuesToggle = false;
+  toggles.switch('forks');
+  sortByCondition(toggles.category['forks'], 'forks');
+  reRenderTableRows();
+  removeClassFromHeaders();
+  resetHeaderInnerHTML();
 
-  sortByCondition(forksToggle, 'forks');
-  reRenderTable();
-
-  scoreHeader.removeAttribute('class');
-  forksHeader.setAttribute('class', 'selected');
-  starsHeader.removeAttribute('class');
-  issuesHeader.removeAttribute('class');
-
-  scoreHeader.innerHTML = `<th id="score-header">Score</th>`;
-  starsHeader.innerHTML = `<th id="stars-header">Stars</th>`;
-  issuesHeader.innerHTML = `<th id="issues-header">Issues (open)</th>`;
-
-  if (forksToggle) {
-    forksHeader.innerHTML = `
-      <th id="score-header">Forks &#9660;</th>
-    `;
+  if (toggles.category['forks']) {
+    forksHeader.innerHTML = `<th id="score-header">Forks &#9660;</th>`;
   } else {
-    forksHeader.innerHTML = `
-      <th id="score-header">Forks &#9650;</th>
-    `;
+    forksHeader.innerHTML = `<th id="score-header">Forks &#9650;</th>`;
   }
+
+  forksHeader.setAttribute('class', 'selected');
 });
 
 starsHeader.addEventListener('click', function () {
-  scoreToggle = false;
-  forksToggle = false;
-  starsToggle = !starsToggle;
-  issuesToggle = false;
+  toggles.switch('stars');
 
-  sortByCondition(starsToggle, 'stars');
-  reRenderTable();
+  sortByCondition(toggles.category['stars'], 'stars');
+  reRenderTableRows();
+  removeClassFromHeaders();
+  resetHeaderInnerHTML();
 
-  scoreHeader.removeAttribute('class');
-  forksHeader.removeAttribute('class');
-  starsHeader.setAttribute('class', 'selected');
-  issuesHeader.removeAttribute('class');
-
-  scoreHeader.innerHTML = `<th id="score-header">Score</th>`;
-  forksHeader.innerHTML = `<th id="forks-header">Forks</th>`;
-  issuesHeader.innerHTML = `<th id="issues-header">Issues (open)</th>`;
-
-  if (starsToggle) {
-    starsHeader.innerHTML = `
-      <th id="score-header">Stars  &#9660;</th>
-    `;
+  if (toggles.category['stars']) {
+    starsHeader.innerHTML = `<th id="score-header">Stars  &#9660;</th>`;
   } else {
-    starsHeader.innerHTML = `
-      <th id="score-header">Stars  &#9650;</th>
-    `;
+    starsHeader.innerHTML = `<th id="score-header">Stars  &#9650;</th>`;
   }
+
+  starsHeader.setAttribute('class', 'selected');
 });
 
 issuesHeader.addEventListener('click', function () {
-  scoreToggle = false;
-  forksToggle = false;
-  starsToggle = false;
-  issuesToggle = !issuesToggle;
+  toggles.switch('issues');
 
-  sortByCondition(issuesToggle, 'issues');
-  reRenderTable();
+  sortByCondition(toggles.category['issues'], 'issues');
+  reRenderTableRows();
+  removeClassFromHeaders();
+  resetHeaderInnerHTML();
 
-  scoreHeader.removeAttribute('class');
-  forksHeader.removeAttribute('class');
-  starsHeader.removeAttribute('class');
-  issuesHeader.setAttribute('class', 'selected');
-
-  scoreHeader.innerHTML = `<th id="score-header">Score</th>`;
-  forksHeader.innerHTML = `<th id="forks-header">Forks</th>`;
-  starsHeader.innerHTML = `<th id="stars-header">Stars</th>`;
-
-  if (issuesToggle) {
-    issuesHeader.innerHTML = `
-      <th id="score-header">Issues (open) &#9660;</th>
-    `;
+  if (toggles.category['issues']) {
+    issuesHeader.innerHTML = `<th id="score-header">Issues (open) &#9660;</th>`;
   } else {
-    issuesHeader.innerHTML = `
-      <th id="score-header">Issues (open) &#9650;</th>
-    `;
+    issuesHeader.innerHTML = `<th id="score-header">Issues (open) &#9650;</th>`;
   }
+
+  issuesHeader.setAttribute('class', 'selected');
 });
 
 //INITIAL API CALLS function (via thunks) and invocation, re-used later
@@ -243,10 +225,10 @@ calculateCompositeScores();
 setTimeout(() => sortByCondition(true, 'score'), 3000);
 //ORDER TABLE by Scores calculated above
 setTimeout(() => {
-  reRenderTable();
+  reRenderTableRows();
 }, 4000);
 
-function reRenderTable() {
+function reRenderTableRows() {
   rowOne.innerHTML = `
     <td>
       ${frameworks[0].name[0].toUpperCase() + frameworks[0].name.slice(1)}
