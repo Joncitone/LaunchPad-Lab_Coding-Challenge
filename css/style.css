@@ -51,7 +51,7 @@ th {
 
 #score-header:hover,
 #forks-header:hover,
-#commits-header:hover,
+#stars-header:hover,
 #issues-header:hover {
   background-color: darkgray;
 }
