@@ -12,47 +12,26 @@ import {
 import store from './store/index.js';
 store.setInitialState();
 
-//ELEMENTS TO RENDER
-const scoreHeader = document.getElementById('score-header');
-const forksHeader = document.getElementById('forks-header');
-const starsHeader = document.getElementById('stars-header');
-const issuesHeader = document.getElementById('issues-header');
-const rowOne = document.getElementById('row-one');
-const rowTwo = document.getElementById('row-two');
-const rowThree = document.getElementById('row-three');
-const rowFour = document.getElementById('row-four');
-const reactScore = document.getElementById('react-score');
-const angularScore = document.getElementById('angular-score');
-const emberScore = document.getElementById('ember-score');
-const vueScore = document.getElementById('vue-score');
-const reactForks = document.getElementById('react-forks');
-const reactStars = document.getElementById('react-stars');
-const reactIssues = document.getElementById('react-issues');
-const angularForks = document.getElementById('angular-forks');
-const angularStars = document.getElementById('angular-stars');
-const angularIssues = document.getElementById('angular-issues');
-const emberForks = document.getElementById('ember-forks');
-const emberStars = document.getElementById('ember-stars');
-const emberIssues = document.getElementById('ember-issues');
-const vueForks = document.getElementById('vue-forks');
-const vueStars = document.getElementById('vue-stars');
-const vueIssues = document.getElementById('vue-issues');
-
 //RENDER FUNCTION
 function render(prevState, state) {
   if (prevState !== state) {
-    reactForks.innerHTML = store.state.react.forks;
-    reactStars.innerHTML = store.state.react.stars;
-    reactIssues.innerHTML = store.state.react.issues;
-    angularForks.innerHTML = store.state.angular.forks;
-    angularStars.innerHTML = store.state.angular.stars;
-    angularIssues.innerHTML = store.state.angular.issues;
-    emberForks.innerHTML = store.state.ember.forks;
-    emberStars.innerHTML = store.state.ember.stars;
-    emberIssues.innerHTML = store.state.ember.issues;
-    vueForks.innerHTML = store.state.vue.forks;
-    vueStars.innerHTML = store.state.vue.stars;
-    vueIssues.innerHTML = store.state.vue.issues;
+    document.getElementById('react-forks').innerHTML = store.state.react.forks;
+    document.getElementById('react-stars').innerHTML = store.state.react.stars;
+    document.getElementById('react-issues').innerHTML =
+      store.state.react.issues;
+    document.getElementById('angular-forks').innerHTML =
+      store.state.angular.forks;
+    document.getElementById('angular-stars').innerHTML =
+      store.state.angular.stars;
+    document.getElementById('angular-issues').innerHTML =
+      store.state.angular.issues;
+    document.getElementById('ember-forks').innerHTML = store.state.ember.forks;
+    document.getElementById('ember-stars').innerHTML = store.state.ember.stars;
+    document.getElementById('ember-issues').innerHTML =
+      store.state.ember.issues;
+    document.getElementById('vue-forks').innerHTML = store.state.vue.forks;
+    document.getElementById('vue-stars').innerHTML = store.state.vue.stars;
+    document.getElementById('vue-issues').innerHTML = store.state.vue.issues;
   }
 }
 
@@ -102,6 +81,12 @@ const toggles = {
     this.category[target] = !prevVal;
   },
 };
+
+//Headers Used Below
+const scoreHeader = document.getElementById('score-header');
+const forksHeader = document.getElementById('forks-header');
+const starsHeader = document.getElementById('stars-header');
+const issuesHeader = document.getElementById('issues-header');
 
 //Removes selected class from all headers
 function removeClassFromHeaders() {
@@ -213,10 +198,11 @@ function calculateCompositeScores() {
     getEmberScoreThunk();
     getVueScoreThunk();
 
-    reactScore.innerHTML = store.state.react.score;
-    angularScore.innerHTML = store.state.angular.score;
-    emberScore.innerHTML = store.state.ember.score;
-    vueScore.innerHTML = store.state.vue.score;
+    document.getElementById('react-score').innerHTML = store.state.react.score;
+    document.getElementById('angular-score').innerHTML =
+      store.state.angular.score;
+    document.getElementById('ember-score').innerHTML = store.state.ember.score;
+    document.getElementById('vue-score').innerHTML = store.state.vue.score;
   }, 2000);
 }
 calculateCompositeScores();
@@ -229,45 +215,17 @@ setTimeout(() => {
 }, 4000);
 
 function reRenderTableRows() {
-  rowOne.innerHTML = `
+  for (let i = 0; i < frameworks.length; i++) {
+    document.getElementById(`row-${i}`).innerHTML = `
     <td>
-      ${frameworks[0].name[0].toUpperCase() + frameworks[0].name.slice(1)}
+      ${frameworks[i].name[0].toUpperCase() + frameworks[i].name.slice(1)}
     </td>
-    <td id="${frameworks[0].name}-score">${frameworks[0].score}</td>
-    <td id="${frameworks[0].name}-forks">${frameworks[0].forks}</td>
-    <td id="${frameworks[0].name}-stars">${frameworks[0].stars}</td>
-    <td id="${frameworks[0].name}-issues-">${frameworks[0].issues}</td>
+    <td id="${frameworks[i].name}-score">${frameworks[i].score}</td>
+    <td id="${frameworks[i].name}-forks">${frameworks[i].forks}</td>
+    <td id="${frameworks[i].name}-stars">${frameworks[i].stars}</td>
+    <td id="${frameworks[i].name}-issues-">${frameworks[i].issues}</td>
   `;
-
-  rowTwo.innerHTML = `
-    <td>
-      ${frameworks[1].name[0].toUpperCase() + frameworks[1].name.slice(1)}
-    </td>
-    <td id="${frameworks[1].name}-score">${frameworks[1].score}</td>
-    <td id="${frameworks[1].name}-forks">${frameworks[1].forks}</td>
-    <td id="${frameworks[1].name}-stars">${frameworks[1].stars}</td>
-    <td id="${frameworks[1].name}-issues-">${frameworks[1].issues}</td>
-  `;
-
-  rowThree.innerHTML = `
-    <td>
-      ${frameworks[2].name[0].toUpperCase() + frameworks[2].name.slice(1)}
-    </td>
-    <td id="${frameworks[2].name}-score">${frameworks[2].score}</td>
-    <td id="${frameworks[2].name}-forks">${frameworks[2].forks}</td>
-    <td id="${frameworks[2].name}-stars">${frameworks[2].stars}</td>
-    <td id="${frameworks[2].name}-issues-">${frameworks[2].issues}</td>
-  `;
-
-  rowFour.innerHTML = `
-    <td>
-      ${frameworks[3].name[0].toUpperCase() + frameworks[3].name.slice(1)}
-    </td>
-    <td id="${frameworks[3].name}-score">${frameworks[3].score}</td>
-    <td id="${frameworks[3].name}-forks">${frameworks[3].forks}</td>
-    <td id="${frameworks[3].name}-stars">${frameworks[3].stars}</td>
-    <td id="${frameworks[3].name}-issues-">${frameworks[3].issues}</td>
-  `;
+  }
 }
 
 /* REPEAT API Calls

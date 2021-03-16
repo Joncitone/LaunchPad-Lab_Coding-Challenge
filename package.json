@@ -1,23 +1,27 @@
 {
-  "name": "LaunchPad-Lab_Coding-Challenge",
+  "name": "launchpad-lab_coding-challenge",
   "version": "1.0.0",
-  "description": "## Deployed Version",
-  "main": "index.js",
+  "description": "coding challenge project",
+  "main": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "http-server . -p 8000 -o -c-1",
+    "test": "mocha ./tests/*.spec.js --watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Joncitone/LaunchPad-Lab_Coding-Challenge.git"
+    "url": "git+https://github.com/Joncitone/launchpad-lab_coding-challenge.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jonathan Arreola",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Joncitone/LaunchPad-Lab_Coding-Challenge/issues"
+    "url": "https://github.com/Joncitone/launchpad-lab_coding-challenge/issues"
   },
-  "homepage": "https://github.com/Joncitone/LaunchPad-Lab_Coding-Challenge#readme",
+  "homepage": "https://github.com/Joncitone/launchpad-lab_coding-challenge#readme",
   "dependencies": {
+    "chai": "^4.3.4",
+    "http-server": "^0.12.3",
+    "mocha": "^8.3.2",
     "node-fetch": "^2.6.1"
   }
 }
