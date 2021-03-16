@@ -54,6 +54,7 @@ th {
 #stars-header:hover,
 #issues-header:hover {
   background-color: darkgray;
+  cursor: pointer;
 }
 
 th,
@@ -69,8 +70,4 @@ tbody > tr > td:first-child {
 #home-page-header {
   font-size: 2em;
   text-align: center;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; */
 }
