@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "start": "http-server . -p 8000 -o -c-1",
-    "test": "mocha ./tests/*.spec.js --watch"
+    "test": "mocha ./tests/*.spec.js --watch --require @babel/register"
   },
   "repository": {
     "type": "git",
@@ -19,9 +19,14 @@
   },
   "homepage": "https://github.com/Joncitone/launchpad-lab_coding-challenge#readme",
   "dependencies": {
-    "chai": "^4.3.4",
     "http-server": "^0.12.3",
-    "mocha": "^8.3.2",
     "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/register": "^7.13.8",
+    "chai": "^4.3.4",
+    "mocha": "^8.3.2"
   }
 }

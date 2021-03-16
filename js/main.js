@@ -89,7 +89,7 @@ const starsHeader = document.getElementById('stars-header');
 const issuesHeader = document.getElementById('issues-header');
 
 //Removes selected class from all headers
-function removeClassFromHeaders() {
+export function removeClassFromHeaders() {
   scoreHeader.removeAttribute('class');
   forksHeader.removeAttribute('class');
   starsHeader.removeAttribute('class');
@@ -97,7 +97,7 @@ function removeClassFromHeaders() {
 }
 
 //Category Header innerHTML Setter
-function resetHeaderInnerHTML() {
+export function resetHeaderInnerHTML() {
   scoreHeader.innerHTML = `<th id="score-header">Score</th>`;
   forksHeader.innerHTML = `<th id="forks-header">Forks</th>`;
   starsHeader.innerHTML = `<th id="stars-header">Stars</th>`;
@@ -172,7 +172,7 @@ issuesHeader.addEventListener('click', function () {
 });
 
 //INITIAL API CALLS function (via thunks) and invocation, re-used later
-function callGithubAPIs() {
+export function callGithubAPIs() {
   getReactForksStarsIssuesThunk();
   getAngularForksStarsIssuesThunk();
   getEmberForksStarsIssuesThunk();
@@ -183,7 +183,7 @@ function callGithubAPIs() {
 callGithubAPIs();
 
 //see state change after initial API call, used above and re-used later
-function showUpdatedState() {
+export function showUpdatedState() {
   setTimeout(() => {
     console.log('prevState', store.prevState);
     console.log('state', store.state);
@@ -191,7 +191,7 @@ function showUpdatedState() {
 }
 
 //Calculate Score by default upon initial render
-function calculateCompositeScores() {
+export function calculateCompositeScores() {
   setTimeout(() => {
     getReactScoreThunk();
     getAngularScoreThunk();
@@ -214,7 +214,7 @@ setTimeout(() => {
   reRenderTableRows();
 }, 4000);
 
-function reRenderTableRows() {
+export function reRenderTableRows() {
   for (let i = 0; i < frameworks.length; i++) {
     document.getElementById(`row-${i}`).innerHTML = `
     <td>

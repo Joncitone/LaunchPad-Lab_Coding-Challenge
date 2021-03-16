@@ -3,7 +3,7 @@ import angular from './angular.js';
 import ember from './ember.js';
 import vue from './vue.js';
 
-class Store {
+export class Store {
   constructor() {
     this.state = {};
     this.prevState = {};

@@ -1,5 +1,4 @@
-//const fetch = require('node-fetch');
-
+if (typeof process !== 'undefined') global.fetch = require('node-fetch');
 export default class FrameworkAPI {
   constructor(owner, repo) {
     this.owner = owner;
