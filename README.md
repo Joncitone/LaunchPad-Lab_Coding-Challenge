@@ -8,16 +8,48 @@ https://joncitone.github.io/launchpad-lab_coding-challenge
 
 1. ### Fork or Clone the Repo
 
-2. ### Open the project in your IDE
-3. ### Launching in the Browser
-   - If you have an extension like [Live Server](https://github.com/ritwickdey/vscode-live-server), click Go Live to view the page.
+```
+  git clone https://github.com/Joncitone/launchpad-lab_coding-challenge.git
+```
+
+2. ### Step into the Directory
+
+```
+  cd launchpad-lab_coding-challenge/
+```
+
+3. ### Install Dependencies
+
+```
+  npm install
+```
+
+4. ### Launching in the Browser
+
+```
+  npm start
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_Alternatively if you have an extension like [Live Server](https://github.com/ritwickdey/vscode-live-server), click Go Live to view the page._
+
+5. ### Running Tests
+
+```
+  npm test
+```
+
+---
 
 ## Technologies Used
 
 - Vanilla JS (ES6)
 
 - node-fetch (npm package)
+
   - used to add fetch functionality to Node.js for initial API testing
+
+- mocha / chai (testing and assertion libraries)
+  - used to run tests in node
 
 ## Features
 
