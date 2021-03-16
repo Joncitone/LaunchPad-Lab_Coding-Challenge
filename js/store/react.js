@@ -1,6 +1,5 @@
 import FrameworkAPI from '../api/github.js';
 import store from './index.js';
-const { dispatch } = store;
 
 //API
 const reactAPI = new FrameworkAPI('facebook', 'react');
@@ -24,7 +23,7 @@ export function getReactScoreThunk() {
     Math.round(store.state.react.stars / 10000) +
     Math.round(store.state.react.issues / 1000);
 
-  dispatch(getReactScore(score));
+  store.dispatch(getReactScore(score));
 }
 
 export function getReactForksStarsIssuesThunk() {
@@ -32,22 +31,12 @@ export function getReactForksStarsIssuesThunk() {
     .fetchForksStarsIssues()
     .then((response) => response.json())
     .then((data) => {
-      dispatch(getReactForks(data.items[0].forks));
-      dispatch(getReactStars(data.items[0].watchers));
-      dispatch(getReactIssues(data.items[0].open_issues));
+      store.dispatch(getReactForks(data.items[0].forks));
+      store.dispatch(getReactStars(data.items[0].watchers));
+      store.dispatch(getReactIssues(data.items[0].open_issues));
     })
     .catch((error) => console.error(error));
 }
-
-export const getReactIssuesThunk = () => {
-  reactAPI
-    .fetchIssues()
-    .then((response) => response.json())
-    .then((data) => {
-      dispatch(getReactIssues(data.total_count));
-    })
-    .catch((error) => console.error(error));
-};
 
 //INITIAL STATE
 const initialState = {

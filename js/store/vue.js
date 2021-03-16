@@ -1,6 +1,5 @@
 import FrameworkAPI from '../api/github.js';
 import store from './index.js';
-const { dispatch } = store;
 
 //API
 const vueAPI = new FrameworkAPI('vuejs', 'vue');
@@ -24,7 +23,7 @@ export function getVueScoreThunk() {
     Math.round(store.state.vue.stars / 10000) +
     Math.round(store.state.vue.issues / 1000);
 
-  dispatch(getVueScore(score));
+  store.dispatch(getVueScore(score));
 }
 
 export function getVueForksStarsIssuesThunk() {
@@ -32,9 +31,9 @@ export function getVueForksStarsIssuesThunk() {
     .fetchForksStarsIssues()
     .then((response) => response.json())
     .then((data) => {
-      dispatch(getVueForks(data.items[0].forks));
-      dispatch(getVueStars(data.items[0].watchers));
-      dispatch(getVueIssues(data.items[0].open_issues));
+      store.dispatch(getVueForks(data.items[0].forks));
+      store.dispatch(getVueStars(data.items[0].watchers));
+      store.dispatch(getVueIssues(data.items[0].open_issues));
     })
     .catch((error) => console.error(error));
 }

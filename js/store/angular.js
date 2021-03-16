@@ -1,6 +1,5 @@
 import FrameworkAPI from '../api/github.js';
 import store from './index.js';
-const { dispatch } = store;
 
 //API
 const angularAPI = new FrameworkAPI('angular', 'angular.js');
@@ -24,7 +23,7 @@ export function getAngularScoreThunk() {
     Math.round(store.state.angular.stars / 10000) +
     Math.round(store.state.angular.issues / 1000);
 
-  dispatch(getAngularScore(score));
+  store.dispatch(getAngularScore(score));
 }
 
 export function getAngularForksStarsIssuesThunk() {
@@ -32,9 +31,9 @@ export function getAngularForksStarsIssuesThunk() {
     .fetchForksStarsIssues()
     .then((response) => response.json())
     .then((data) => {
-      dispatch(getAngularForks(data.items[0].forks));
-      dispatch(getAngularStars(data.items[0].watchers));
-      dispatch(getAngularIssues(data.items[0].open_issues));
+      store.dispatch(getAngularForks(data.items[0].forks));
+      store.dispatch(getAngularStars(data.items[0].watchers));
+      store.dispatch(getAngularIssues(data.items[0].open_issues));
     })
     .catch((error) => console.error(error));
 }
