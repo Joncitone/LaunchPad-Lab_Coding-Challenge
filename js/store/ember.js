@@ -1,5 +1,6 @@
 import FrameworkAPI from '../api/github.js';
 import store from './index.js';
+const { dispatch } = store;
 
 //API
 const emberAPI = new FrameworkAPI('emberjs', 'ember.js');
@@ -23,7 +24,7 @@ export function getEmberScoreThunk() {
     Math.round(store.state.ember.stars / 10000) +
     Math.round(store.state.ember.issues / 1000);
 
-  store.dispatch(getEmberScore(score));
+  dispatch(getEmberScore(score));
 }
 
 export function getEmberForksStarsIssuesThunk() {
@@ -31,9 +32,9 @@ export function getEmberForksStarsIssuesThunk() {
     .fetchForksStarsIssues()
     .then((response) => response.json())
     .then((data) => {
-      store.dispatch(getEmberForks(data.items[0].forks));
-      store.dispatch(getEmberStars(data.items[0].watchers));
-      store.dispatch(getEmberIssues(data.items[0].open_issues));
+      dispatch(getEmberForks(data.items[0].forks));
+      dispatch(getEmberStars(data.items[0].watchers));
+      dispatch(getEmberIssues(data.items[0].open_issues));
     })
     .catch((error) => console.error(error));
 }
