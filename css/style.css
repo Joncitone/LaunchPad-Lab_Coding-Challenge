@@ -71,3 +71,7 @@ tbody > tr > td:first-child {
   font-size: 2em;
   text-align: center;
 }
+
+footer {
+  text-align: center;
+}
