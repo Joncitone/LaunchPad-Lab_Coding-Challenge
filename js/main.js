@@ -15,6 +15,7 @@ store.setInitialState();
 //RENDER FUNCTION
 function render(prevState, state) {
   if (prevState !== state) {
+    // update state
     document.getElementById('react-forks').innerHTML = store.state.react.forks;
     document.getElementById('react-stars').innerHTML = store.state.react.stars;
     document.getElementById('react-issues').innerHTML =
@@ -53,7 +54,7 @@ function clearAndPopulateFrameworks(prevState, state) {
 }
 store.subscribe(clearAndPopulateFrameworks);
 
-//Switching Sort By Condition
+// Switching Sort By Condition
 function sortByCondition(toggle, condition) {
   frameworks.sort((a, b) => {
     return toggle ? b[condition] - a[condition] : a[condition] - b[condition];
@@ -82,7 +83,7 @@ const toggles = {
   },
 };
 
-//Headers Used Below
+//Headers (used below)
 const scoreHeader = document.getElementById('score-header');
 const forksHeader = document.getElementById('forks-header');
 const starsHeader = document.getElementById('stars-header');

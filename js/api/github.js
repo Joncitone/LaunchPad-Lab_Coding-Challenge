@@ -1,4 +1,6 @@
+// If the environment is node, use node-fetch
 if (typeof process !== 'undefined') global.fetch = require('node-fetch');
+
 export default class FrameworkAPI {
   constructor(owner, repo) {
     this.owner = owner;

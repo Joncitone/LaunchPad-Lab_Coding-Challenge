@@ -76,15 +76,15 @@ Rationale of metrics chosen as indicators of activity, community support, and st
 - **Score**: I calculated a score for each framework by combining forks, stars, and open issues.
   The formula is consistent across frameworks, and can be found as a thunk in the reducer files.
 
-- **Forks**: Forks are a decent indication of code stability, while not all forks are projects that depend on the stability of the repository, a good portion of them are and they will ocassionally update their fork by setting the original as an upstream.
+- **Forks**: Forks are a decent indication of code stability. While not all forks are projects that depend on the stability of the repository, a good portion of them are. Users can update their fork by setting the original as an upstream.
 
-- **Stars**: Stars are mostly a sign of community support in the form of a social media popularity indicator. Stars are very similar to likes on social media sites, and along with Following are one of the biggest social aspects of Github.
+- **Stars**: Stars are an indicator of social media popularity. Stars are very similar to likes on social media sites, and (along with following) are one of the biggest social aspects of Github.
 
-- **Issues** (open): Issues were a bit tricky, and over the several iterations of this project I switched from closed issues, to total issues, and finally landed on open issues. My decision was based on open issues being a decent sign of activity, while the other forms of issues were more a sign of repository age.
+- **Issues** (open): Issues were a bit tricky. Over the several iterations of this project, I switched from closed issues, to total issues, and finally landed on open issues. Open issues are a decent sign of current activity, while the other forms of issues were more a sign of repository age.
 
 ### Other Considerations
 
-- **Commits**: Like issues, I experimented with commits. First with an array indicating weekly commits over the past year, then with the total number of commits. Ultimately, I decided this was not a good indicator due to Ember being an outlier with an inordinate amount of commits.
+- **Commits**: Like issues, I experimented with commits. First with an array indicating weekly commits over the past year, then with the total number of commits. Ultimately, I decided this was not a good indicator because this is a signal of code development style rather than quality.
 
 - **NPM Package Downloads**: I considered adding these metrics to the overall score as they might also be a good indication of development activity. React was very popular here, perhaps due to CRA, Next.js, and Gatsby. In the end I decided against it since it would put React so far ahead.
 
