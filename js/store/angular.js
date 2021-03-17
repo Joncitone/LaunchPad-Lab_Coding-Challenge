@@ -11,10 +11,13 @@ const GET_ANGULAR_STARS = 'GET_ANGULAR_STARS';
 const GET_ANGULAR_ISSUES = 'GET_ANGULAR_ISSUES';
 
 //ACTION CREATORS
-const getAngularScore = (score) => ({ type: GET_ANGULAR_SCORE, score });
-const getAngularForks = (forks) => ({ type: GET_ANGULAR_FORKS, forks });
-const getAngularStars = (stars) => ({ type: GET_ANGULAR_STARS, stars });
-const getAngularIssues = (issues) => ({ type: GET_ANGULAR_ISSUES, issues });
+export const getAngularScore = (score) => ({ type: GET_ANGULAR_SCORE, score });
+export const getAngularForks = (forks) => ({ type: GET_ANGULAR_FORKS, forks });
+export const getAngularStars = (stars) => ({ type: GET_ANGULAR_STARS, stars });
+export const getAngularIssues = (issues) => ({
+  type: GET_ANGULAR_ISSUES,
+  issues,
+});
 
 //THUNKS
 export function getAngularScoreThunk() {

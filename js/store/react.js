@@ -11,10 +11,10 @@ const GET_REACT_STARS = 'GET_REACT_STARS';
 const GET_REACT_ISSUES = 'GET_REACT_ISSUES';
 
 //ACTION CREATORS
-const getReactScore = (score) => ({ type: GET_REACT_SCORE, score });
-const getReactForks = (forks) => ({ type: GET_REACT_FORKS, forks });
-const getReactStars = (stars) => ({ type: GET_REACT_STARS, stars });
-const getReactIssues = (issues) => ({ type: GET_REACT_ISSUES, issues });
+export const getReactScore = (score) => ({ type: GET_REACT_SCORE, score });
+export const getReactForks = (forks) => ({ type: GET_REACT_FORKS, forks });
+export const getReactStars = (stars) => ({ type: GET_REACT_STARS, stars });
+export const getReactIssues = (issues) => ({ type: GET_REACT_ISSUES, issues });
 
 //THUNKS
 export function getReactScoreThunk() {
