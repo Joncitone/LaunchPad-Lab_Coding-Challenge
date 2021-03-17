@@ -4,6 +4,10 @@
 
 https://joncitone.github.io/launchpad-lab_coding-challenge
 
+## React Version
+
+https://github.com/joncitone/lpl-cc_react-version
+
 ## Setup
 
 1. ### Fork or Clone the Repo
